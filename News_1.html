@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <meta
+        name="description"
+        content="The Intelligent Unmanned Systems Laboratory has made new progress in cooperative UAV control."
+    >
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+    <title>News - Intelligent Unmanned Systems Laboratory</title>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            background: #f4f7f9;
+            color: #333333;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            min-height: 54px;
+            padding: 15px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            background: #002c55;
+            color: #ffffff;
+            z-index: 20;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+        }
+
+        header nav a {
+            margin-left: 20px;
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        header nav a:hover,
+        header nav a[aria-current="page"] {
+            color: #ffd446;
+        }
+
+        header nav a:focus-visible {
+            color: #ffd446;
+            outline: 2px solid #ffd446;
+            outline-offset: 4px;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        .news-page {
+            width: min(920px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 74px 0 18px;
+            display: flex;
+            flex: 1 0 auto;
+            align-items: stretch;
+        }
+
+        .news-detail {
+            width: 100%;
+            min-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border: 1px solid #dce3e8;
+            border-radius: 12px;
+            box-shadow: 0 10px 28px rgba(0, 44, 85, 0.1);
+        }
+
+        .news-gallery {
+            position: relative;
+            flex: 0 0 auto;
+            background: #101820;
+            outline: none;
+        }
+
+        .gallery-viewport {
+            overflow: hidden;
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-slide {
+            width: 100%;
+            min-width: 100%;
+            flex: 0 0 100%;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: clamp(220px, 34vh, 330px);
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .gallery-btn {
+            position: absolute;
+            top: 50%;
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.84);
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+            color: #263746;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        .gallery-btn:hover {
+            background: #ffffff;
+        }
+
+        .gallery-btn:focus-visible {
+            outline: 3px solid #ffd446;
+            outline-offset: 3px;
+        }
+
+        .gallery-prev {
+            left: 14px;
+        }
+
+        .gallery-next {
+            right: 14px;
+        }
+
+        .gallery-counter {
+            position: absolute;
+            right: 14px;
+            bottom: 12px;
+            min-width: 48px;
+            padding: 5px 10px;
+            background: rgba(0, 0, 0, 0.62);
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 12px;
+            line-height: 1.4;
+            text-align: center;
+            z-index: 3;
+        }
+
+        .news-content {
+            min-height: 0;
+            padding: 22px 34px 24px;
+            display: flex;
+            flex: 1 0 auto;
+            flex-direction: column;
+        }
+
+        .news-date {
+            margin: 0 0 7px;
+            color: #75838e;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .news-content h1 {
+            margin: 0 0 14px;
+            color: #002c55;
+            font-size: clamp(25px, 3vw, 34px);
+            line-height: 1.3;
+        }
+
+        .news-article {
+            color: #4d5b66;
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        .news-article p {
+            margin: 0 0 10px;
+        }
+
+        .news-article p:last-child {
+            margin-bottom: 0;
+        }
+
+        .news-actions {
+            margin-top: auto;
+            padding-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .back-to-news {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #17669e;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-to-news:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-news:focus-visible {
+            outline: 3px solid rgba(23, 102, 158, 0.25);
+            outline-offset: 4px;
+        }
+
+        .news-source {
+            margin: 0;
+            color: #87939c;
+            font-size: 12px;
+        }
+
+        .site-footer {
+            background-color: #002c55;
+            color: #ffffff;
+            padding: 28px 40px 16px;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .footer-content {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.7fr 1.7fr 0.8fr 0.9fr;
+            grid-template-rows: auto auto;
+            column-gap: 34px;
+            row-gap: 8px;
+            align-items: start;
+        }
+
+        .footer-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            padding: 0;
+            margin: 0;
+            background: none;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            box-sizing: border-box;
+        }
+
+        .footer-address {
+            grid-row: span 2;
+        }
+
+        .footer-box i {
+            color: #ffffff;
+            font-size: 15px;
+            width: 17px;
+            min-width: 17px;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        .footer-box strong {
+            display: block;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .footer-box p {
+            margin: 0;
+            color: #dbe4ec;
+        }
+
+        .footer-small span,
+        .footer-small a {
+            color: #dbe4ec;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .footer-small a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .footer-small .social-links a {
+            position: relative;
+            width: 34px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #dbe4ec;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+
+            font-size: 17px;
+            line-height: 1;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        /* 在除最后一个图标外的每个图标右侧添加竖线 */
+        .footer-small .social-links a:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 4px;
+            right: 0;
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .footer-small .social-links a:hover {
+            color: #ffd446;
+            background: transparent;
+            text-decoration: none;
+        }
+
+        .footer-small .social-links a:focus-visible {
+            color: #ffd446;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: 2px solid #ffd446;
+            outline-offset: 2px;
+            text-decoration: none;
+        }
+
+        .footer-copyright {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.16);
+            text-align: center;
+            color: #aebdca;
+            font-size: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 16px;
+            }
+
+            .footer-address {
+                grid-row: auto;
+            }
+        }
+
+        @media (max-width: 750px) {
+            header {
+                min-height: 56px;
+                padding: 7px 15px;
+            }
+
+            .menu-toggle {
+                min-height: 42px;
+                padding: 8px 12px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background: transparent;
+                border: 1px solid rgba(255, 255, 255, 0.45);
+                border-radius: 5px;
+                color: #ffffff;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            .menu-toggle:hover {
+                color: #ffd446;
+                border-color: #ffd446;
+            }
+
+            .menu-toggle:focus-visible {
+                outline: 3px solid rgba(255, 212, 70, 0.75);
+                outline-offset: 2px;
+            }
+
+            .menu-toggle i {
+                width: 17px;
+                font-size: 18px;
+            }
+
+            header nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                width: 100%;
+                max-height: 0;
+                padding: 0 15px;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                overflow: hidden;
+                visibility: hidden;
+                opacity: 0;
+                pointer-events: none;
+                background: #002c55;
+                border-top: 1px solid rgba(255, 255, 255, 0.15);
+                box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+                transition:
+                    max-height 0.3s ease,
+                    padding 0.3s ease,
+                    opacity 0.2s ease,
+                    visibility 0.2s ease;
+            }
+
+            header nav.is-open {
+                max-height: 450px;
+                padding-top: 8px;
+                padding-bottom: 10px;
+                visibility: visible;
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            header nav a {
+                width: 100%;
+                margin: 0;
+                padding: 11px 13px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 4px;
+                font-size: 15px;
+                line-height: 1.4;
+                text-align: left;
+            }
+
+            header nav a:last-child {
+                border-bottom: none;
+            }
+
+            header nav a:hover,
+            header nav a[aria-current="page"] {
+                background: rgba(255, 255, 255, 0.08);
+                color: #ffd446;
+            }
+
+            .news-page {
+                width: calc(100% - 24px);
+                padding: 68px 0 14px;
+            }
+
+            .news-detail {
+                border-radius: 9px;
+            }
+
+            .gallery-slide img {
+                height: auto;
+                aspect-ratio: 16 / 9;
+            }
+
+            .gallery-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 24px;
+            }
+
+            .gallery-prev {
+                left: 8px;
+            }
+
+            .gallery-next {
+                right: 8px;
+            }
+
+            .gallery-counter {
+                right: 9px;
+                bottom: 8px;
+            }
+
+            .news-content {
+                padding: 19px 18px 21px;
+            }
+
+            .news-content h1 {
+                margin-bottom: 12px;
+                font-size: 25px;
+            }
+
+            .news-article {
+                font-size: 15px;
+                line-height: 1.7;
+            }
+
+            .news-actions {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .site-footer {
+                padding: 24px 20px 16px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-small span,
+            .footer-small a {
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .news-content h1 {
+                font-size: 22px;
+            }
+
+            .news-date {
+                font-size: 12px;
+            }
+
+            .gallery-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 21px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .gallery-track,
+            header nav {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button
+            class="menu-toggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="main-navigation"
+        >
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            <span>Menu</span>
+        </button>
+
+        <nav id="main-navigation" aria-label="Main navigation">
+            <a href="index.html">About</a>
+            <a href="Research.html">Research</a>
+            <a href="Members.html">Members</a>
+            <a href="Publications.html">Publications</a>
+            <a href="Teaching.html">Teaching</a>
+            <a
+                href="index.html?scroll=news"
+                aria-current="page"
+            >
+                News
+            </a>
+            <a href="Join.html">Join us</a>
+        </nav>
+    </header>
+
+    <main class="news-page">
+        <article class="news-detail">
+            <div
+                class="news-gallery"
+                tabindex="0"
+                aria-label="News image gallery"
+            >
+                <div class="gallery-viewport">
+                    <div class="gallery-track">
+                        <div class="gallery-slide">
+                            <img
+                                src="images/UM.jpg"
+                                alt="UAV cooperative control experiment"
+                            >
+                        </div>
+
+                        <div class="gallery-slide">
+                            <img
+                                src="images/UM_1.jpg"
+                                alt="Researchers conducting the UAV experiment"
+                                loading="lazy"
+                            >
+                        </div>
+
+                        <div class="gallery-slide">
+                            <img
+                                src="images/UM_2.jpg"
+                                alt="Multiple UAVs operating in formation"
+                                loading="lazy"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    class="gallery-btn gallery-prev"
+                    type="button"
+                    aria-label="Previous image"
+                >
+                    ‹
+                </button>
+
+                <button
+                    class="gallery-btn gallery-next"
+                    type="button"
+                    aria-label="Next image"
+                >
+                    ›
+                </button>
+
+                <div
+                    class="gallery-counter"
+                    aria-live="polite"
+                >
+                    <span class="current-slide">1</span>
+                    /
+                    <span class="total-slides">3</span>
+                </div>
+            </div>
+
+            <div class="news-content">
+                <p class="news-date">April 5, 2025</p>
+
+                <h1>实验室在无人机协同控制领域取得新进展</h1>
+
+                <div class="news-article">
+                    <p>
+                        智能无人系统实验室近日在多无人机协同控制领域取得新进展，提出了一种基于分布式模型预测控制的新型编队方法。
+                    </p>
+
+                    <p>
+                        该方法能够在通信受限和存在障碍物的复杂环境中，实现多架无人机的稳定编队、轨迹跟踪与实时避碰。实验结果表明，该方法具有良好的控制精度、鲁棒性和实际应用潜力。
+                    </p>
+                </div>
+
+                <div class="news-actions">
+                    <a
+                        class="back-to-news"
+                        href="index.html?scroll=news"
+                    >
+                        <i
+                            class="fa-solid fa-arrow-left"
+                            aria-hidden="true"
+                        ></i>
+                        Back to News
+                    </a>
+
+                    <p class="news-source">
+                        Intelligent Unmanned Systems Laboratory
+                    </p>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-box footer-address">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <strong>Lab</strong>
+                        <p>
+                            Intelligent Unmanned Systems Laboratory<br>
+                            Room E11-1047, Faculty of Science and Technology<br>
+                            University of Macau, Avenida da Universidade, Taipa, Macau, China
+                        </p>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-address">
+                    <i class="fa-solid fa-building"></i>
+                    <div>
+                        <strong>Prof. Office</strong>
+                        <p>
+                            Prof. LIU<br>
+                            Room E11-4080, Faculty of Science and Technology<br>
+                            University of Macau, Avenida da Universidade, Taipa, Macau, China
+                        </p>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-small">
+                    <i class="fa-solid fa-phone"></i>
+                    <div>
+                        <strong>Tel</strong>
+                        <span>+853 8822 4238</span>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-small">
+                    <i class="fa-solid fa-fax"></i>
+                    <div>
+                        <strong>Fax</strong>
+                        <span>+853 8822 2426</span>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-small">
+                    <i class="fa-solid fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong>
+                        <a href="mailto:jasonliu@um.edu.mo">jasonliu@um.edu.mo</a>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-small footer-social">
+                    <i class="fa-solid fa-link"></i>
+
+                    <div>
+                        <strong>Follow Us</strong>
+
+                        <div class="social-links">
+                            <a
+                                href="https://www.youtube.com/@Jason-Liu-um"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="YouTube"
+                                title="YouTube"
+                            >
+                                <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                            </a>
+
+                            <a
+                                href="https://space.bilibili.com/3546697722497300"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Bilibili"
+                                title="Bilibili"
+                            >
+                                <i class="fa-brands fa-bilibili" aria-hidden="true"></i>
+                            </a>
+
+                            <a
+                                href="images/wechat.jpg"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="WeChat"
+                                title="WeChat"
+                            >
+                                <i class="fa-brands fa-weixin" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                &copy; 2026 Intelligent Unmanned Systems Laboratory. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const mainNavigation = document.getElementById(
+            "main-navigation"
+        );
+
+        function closeMobileMenu() {
+            if (!menuToggle || !mainNavigation) {
+                return;
+            }
+
+            mainNavigation.classList.remove("is-open");
+            menuToggle.setAttribute("aria-expanded", "false");
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+
+            const icon = menuToggle.querySelector("i");
+
+            if (icon) {
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+            }
+        }
+
+        function openMobileMenu() {
+            if (!menuToggle || !mainNavigation) {
+                return;
+            }
+
+            mainNavigation.classList.add("is-open");
+            menuToggle.setAttribute("aria-expanded", "true");
+            menuToggle.setAttribute(
+                "aria-label",
+                "Close navigation menu"
+            );
+
+            const icon = menuToggle.querySelector("i");
+
+            if (icon) {
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
+            }
+        }
+
+        if (menuToggle && mainNavigation) {
+            menuToggle.addEventListener("click", () => {
+                const isOpen =
+                    menuToggle.getAttribute("aria-expanded") ===
+                    "true";
+
+                if (isOpen) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
+            });
+
+            mainNavigation.querySelectorAll("a").forEach(link => {
+                link.addEventListener(
+                    "click",
+                    closeMobileMenu
+                );
+            });
+
+            document.addEventListener("click", event => {
+                if (!event.target.closest("header")) {
+                    closeMobileMenu();
+                }
+            });
+
+            document.addEventListener("keydown", event => {
+                if (
+                    event.key === "Escape" &&
+                    menuToggle.getAttribute("aria-expanded") ===
+                        "true"
+                ) {
+                    closeMobileMenu();
+                    menuToggle.focus();
+                }
+            });
+
+            window.addEventListener("resize", () => {
+                if (window.innerWidth > 750) {
+                    closeMobileMenu();
+                }
+            });
+        }
+
+        document
+            .querySelectorAll(".news-gallery")
+            .forEach(gallery => {
+                const track =
+                    gallery.querySelector(".gallery-track");
+                const slides =
+                    gallery.querySelectorAll(".gallery-slide");
+                const previousButton =
+                    gallery.querySelector(".gallery-prev");
+                const nextButton =
+                    gallery.querySelector(".gallery-next");
+                const currentSlide =
+                    gallery.querySelector(".current-slide");
+                const totalSlides =
+                    gallery.querySelector(".total-slides");
+
+                if (
+                    !track ||
+                    slides.length === 0 ||
+                    !previousButton ||
+                    !nextButton
+                ) {
+                    return;
+                }
+
+                let currentIndex = 0;
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                if (totalSlides) {
+                    totalSlides.textContent =
+                        String(slides.length);
+                }
+
+                function updateGallery() {
+                    track.style.transform =
+                        `translateX(-${currentIndex * 100}%)`;
+
+                    if (currentSlide) {
+                        currentSlide.textContent =
+                            String(currentIndex + 1);
+                    }
+                }
+
+                function showPreviousImage() {
+                    currentIndex =
+                        (currentIndex - 1 + slides.length) %
+                        slides.length;
+
+                    updateGallery();
+                }
+
+                function showNextImage() {
+                    currentIndex =
+                        (currentIndex + 1) %
+                        slides.length;
+
+                    updateGallery();
+                }
+
+                previousButton.addEventListener(
+                    "click",
+                    showPreviousImage
+                );
+
+                nextButton.addEventListener(
+                    "click",
+                    showNextImage
+                );
+
+                gallery.addEventListener(
+                    "keydown",
+                    event => {
+                        if (event.key === "ArrowLeft") {
+                            event.preventDefault();
+                            showPreviousImage();
+                        }
+
+                        if (event.key === "ArrowRight") {
+                            event.preventDefault();
+                            showNextImage();
+                        }
+                    }
+                );
+
+                gallery.addEventListener(
+                    "touchstart",
+                    event => {
+                        touchStartX =
+                            event.changedTouches[0].screenX;
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+                gallery.addEventListener(
+                    "touchend",
+                    event => {
+                        touchEndX =
+                            event.changedTouches[0].screenX;
+
+                        const distance =
+                            touchEndX - touchStartX;
+
+                        if (Math.abs(distance) < 45) {
+                            return;
+                        }
+
+                        if (distance > 0) {
+                            showPreviousImage();
+                        } else {
+                            showNextImage();
+                        }
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+                updateGallery();
+            });
+    </script>
+</body>
+</html>

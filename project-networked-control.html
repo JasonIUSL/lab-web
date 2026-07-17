@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Networked Control Systems research project at the Intelligent Unmanned Systems Laboratory.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Networked Control Systems - Intelligent Unmanned Systems Laboratory</title>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background: #f6f8fa;
+            color: #333333;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        img,
+        video {
+            max-width: 100%;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        a {
+            color: #17669e;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background-color: #002c55;
+            color: #ffffff;
+            z-index: 20;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        header nav a {
+            margin-left: 20px;
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        header nav a:hover {
+            color: #ffd446;
+        }
+
+        header nav a[aria-current="page"] {
+            color: #ffd446;
+        }
+
+        header nav a:focus-visible {
+            color: #ffd446;
+            outline: 2px solid #ffd446;
+            outline-offset: 4px;
+        }
+
+        .project-page {
+            width: min(1180px, calc(100% - 56px));
+            min-height: 75vh;
+            margin: 0 auto;
+            padding: 96px 0 70px;
+        }
+
+        .project-detail {
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #d8e0e6;
+            border-top: 5px solid #002c55;
+            border-radius: 10px;
+            box-shadow: 0 6px 22px rgba(0, 44, 85, 0.07);
+        }
+
+        .project-heading {
+            padding: 36px 40px 32px;
+            background: linear-gradient(
+                135deg,
+                #f8fafb 0%,
+                #eef4f8 100%
+            );
+            border-bottom: 1px solid #dfe5ea;
+        }
+
+        .project-heading h1 {
+            max-width: 900px;
+            margin: 0;
+            color: #002c55;
+            font-size: clamp(31px, 4vw, 45px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .project-layout {
+            padding: 38px 40px 42px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 310px;
+            gap: 42px;
+            align-items: start;
+        }
+
+        .project-content,
+        .project-sidebar {
+            min-width: 0;
+        }
+
+        .project-section {
+            margin-bottom: 42px;
+        }
+
+        .project-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-section > h2 {
+            position: relative;
+            margin: 0 0 18px;
+            padding-bottom: 11px;
+            color: #002c55;
+            font-size: 24px;
+            line-height: 1.4;
+        }
+
+        .project-section > h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 53px;
+            height: 3px;
+            background: #17669e;
+        }
+
+        .project-section > p {
+            margin: 0 0 15px;
+            color: #4f5d68;
+            font-size: 15px;
+            line-height: 1.82;
+        }
+
+        .project-section > p:last-child {
+            margin-bottom: 0;
+        }
+
+        .technology-list {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            list-style: none;
+        }
+
+        .technology-list li {
+            padding: 7px 12px;
+            background: #eaf2f7;
+            border: 1px solid #ccdae4;
+            border-radius: 20px;
+            color: #174f77;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .publication-group {
+            margin-bottom: 13px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #d7e0e6;
+            border-radius: 7px;
+        }
+
+        .publication-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .publication-group[open] {
+            border-color: #afc2d0;
+            box-shadow: 0 3px 10px rgba(0, 44, 85, 0.05);
+        }
+
+        .publication-group summary {
+            min-height: 58px;
+            padding: 15px 18px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            align-items: center;
+            gap: 12px;
+            background: #f4f7f9;
+            color: #002c55;
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+        }
+
+        .publication-group summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .publication-group summary::marker {
+            content: "";
+        }
+
+        .publication-group summary:hover {
+            background: #edf3f7;
+        }
+
+        .publication-group summary:focus-visible {
+            outline: 3px solid rgba(0, 44, 85, 0.2);
+            outline-offset: -3px;
+        }
+
+        .publication-group-title {
+            min-width: 0;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .publication-count {
+            padding: 4px 9px;
+            background: #dfeaf2;
+            border-radius: 13px;
+            color: #325f80;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.4;
+            white-space: nowrap;
+        }
+
+        .publication-group summary > i {
+            color: #315e7f;
+            font-size: 12px;
+            transition: transform 0.22s ease;
+        }
+
+        .publication-group[open] summary > i {
+            transform: rotate(180deg);
+        }
+
+        .publication-list {
+            margin: 0;
+            padding: 4px 23px 5px 51px;
+            background: #ffffff;
+        }
+
+        .publication-item {
+            padding: 18px 5px 18px 2px;
+            border-bottom: 1px solid #e1e7eb;
+        }
+
+        .publication-item:last-child {
+            border-bottom: none;
+        }
+
+        .publication-item::marker {
+            color: #17669e;
+            font-weight: 700;
+        }
+
+        .publication-item h3 {
+            margin: 0 0 7px;
+            color: #163f61;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.55;
+        }
+
+        .publication-authors {
+            margin: 0 0 4px;
+            color: #4e5d68;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .publication-source {
+            margin: 0;
+            color: #687681;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .publication-links {
+            margin-top: 9px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .publication-links a {
+            padding: 4px 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #eef4f8;
+            border: 1px solid #d3e0e8;
+            border-radius: 4px;
+            color: #17669e;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.4;
+            text-decoration: none;
+        }
+
+        .publication-links a:hover {
+            background: #17669e;
+            border-color: #17669e;
+            color: #ffffff;
+        }
+
+        .publication-links a:focus-visible {
+            outline: 3px solid rgba(0, 44, 85, 0.2);
+            outline-offset: 2px;
+        }
+
+        .sidebar-card {
+            margin-bottom: 22px;
+            overflow: hidden;
+            background: #f8fafb;
+            border: 1px solid #d8e1e7;
+            border-radius: 8px;
+        }
+
+        .sidebar-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-card > h2 {
+            margin: 0;
+            padding: 14px 17px;
+            background: #002c55;
+            color: #ffffff;
+            font-size: 17px;
+            line-height: 1.45;
+        }
+
+        .project-information {
+            margin: 0;
+            padding: 4px 18px;
+        }
+
+        .project-information > div {
+            padding: 13px 0;
+            border-bottom: 1px solid #dde4e9;
+        }
+
+        .project-information > div:last-child {
+            border-bottom: none;
+        }
+
+        .project-information dt {
+            margin: 0 0 4px;
+            color: #63727e;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+
+        .project-information dd {
+            margin: 0;
+            color: #183f5e;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .project-gallery {
+            padding: 14px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 13px;
+        }
+
+        .media-gallery {
+            position: relative;
+            min-width: 0;
+            outline: none;
+        }
+
+        .media-gallery:focus-visible {
+            border-radius: 7px;
+            outline: 3px solid rgba(23, 102, 158, 0.28);
+            outline-offset: 3px;
+        }
+
+        .gallery-viewport {
+            overflow: hidden;
+            background: #000000;
+            border: 1px solid #d9e1e7;
+            border-radius: 7px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-track > img,
+        .gallery-slide {
+            width: 100%;
+            min-width: 100%;
+            flex: 0 0 100%;
+        }
+
+        .gallery-track > img {
+            aspect-ratio: 16 / 9;
+            display: block;
+            background: #e9eef2;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .gallery-slide {
+            background: #000000;
+        }
+
+        .gallery-slide video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+            background: #000000;
+            object-fit: contain;
+        }
+
+        .gallery-btn {
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.82);
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            color: #333333;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            z-index: 5;
+        }
+
+        .gallery-btn:hover {
+            background: #ffffff;
+        }
+
+        .gallery-btn:focus-visible {
+            outline: 3px solid #ffd446;
+            outline-offset: 2px;
+        }
+
+        .gallery-prev {
+            left: 10px;
+        }
+
+        .gallery-next {
+            right: 10px;
+        }
+
+        .back-to-research {
+            margin-top: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #17669e;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-to-research i {
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .back-to-research:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-research:hover i {
+            transform: translateX(-4px);
+        }
+
+        .back-to-research:focus-visible {
+            outline: 3px solid rgba(0, 44, 85, 0.2);
+            outline-offset: 4px;
+        }
+
+        .site-footer {
+            padding: 28px 40px 16px;
+            background-color: #002c55;
+            color: #ffffff;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .footer-content {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.7fr 1.7fr 0.8fr 0.9fr;
+            grid-template-rows: auto auto;
+            column-gap: 34px;
+            row-gap: 8px;
+            align-items: start;
+        }
+
+        .footer-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            padding: 0;
+            margin: 0;
+            background: none;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .footer-address {
+            grid-row: span 2;
+        }
+
+        .footer-box > i {
+            width: 17px;
+            min-width: 17px;
+            margin-top: 3px;
+            color: #ffffff;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .footer-box strong {
+            display: block;
+            margin-bottom: 2px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .footer-box p {
+            margin: 0;
+            color: #dbe4ec;
+        }
+
+        .footer-small span,
+        .footer-small a {
+            color: #dbe4ec;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .footer-small a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-small .social-links a {
+            position: relative;
+            width: 34px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            color: #dbe4ec;
+            font-size: 17px;
+            line-height: 1;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-small .social-links a:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 4px;
+            right: 0;
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .footer-small .social-links a:hover {
+            color: #ffd446;
+            background: transparent;
+            text-decoration: none;
+        }
+
+        .footer-small .social-links a:focus-visible {
+            color: #ffd446;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: 2px solid #ffd446;
+            outline-offset: 2px;
+            text-decoration: none;
+        }
+
+        .footer-copyright {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.16);
+            color: #aebdca;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @media (max-width: 1000px) {
+            .project-layout {
+                grid-template-columns: minmax(0, 1fr) 280px;
+                gap: 30px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 16px;
+            }
+
+            .footer-address {
+                grid-row: auto;
+            }
+        }
+
+        @media (max-width: 820px) {
+            .project-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .project-sidebar {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 18px;
+                align-items: start;
+            }
+
+            .sidebar-card {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 750px) {
+            header {
+                min-height: 56px;
+                padding: 7px 15px;
+                justify-content: flex-end;
+            }
+
+            .menu-toggle {
+                min-height: 42px;
+                padding: 8px 12px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                color: #ffffff;
+                background: transparent;
+                border: 1px solid rgba(255, 255, 255, 0.45);
+                border-radius: 5px;
+                font: inherit;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            .menu-toggle:hover {
+                color: #ffd446;
+                border-color: #ffd446;
+            }
+
+            .menu-toggle:focus-visible {
+                outline: 3px solid rgba(255, 212, 70, 0.75);
+                outline-offset: 2px;
+            }
+
+            .menu-toggle i {
+                width: 17px;
+                font-size: 18px;
+            }
+
+            header nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                width: 100%;
+                max-height: 0;
+                padding: 0 15px;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                overflow: hidden;
+                visibility: hidden;
+                opacity: 0;
+                pointer-events: none;
+                background: #002c55;
+                border-top: 1px solid rgba(255, 255, 255, 0.15);
+                box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+                transition:
+                    max-height 0.3s ease,
+                    padding 0.3s ease,
+                    opacity 0.2s ease,
+                    visibility 0.2s ease;
+            }
+
+            header nav.is-open {
+                max-height: 450px;
+                padding-top: 8px;
+                padding-bottom: 10px;
+                visibility: visible;
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            header nav a {
+                width: 100%;
+                margin: 0;
+                padding: 11px 13px;
+                color: #ffffff;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 4px;
+                font-size: 15px;
+                line-height: 1.4;
+                text-align: left;
+            }
+
+            header nav a:last-child {
+                border-bottom: none;
+            }
+
+            header nav a:hover,
+            header nav a[aria-current="page"] {
+                color: #ffd446;
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .project-page {
+                width: auto;
+                margin: 0 16px;
+                padding: 80px 0 52px;
+            }
+
+            .project-heading {
+                padding: 29px 25px 26px;
+            }
+
+            .project-heading h1 {
+                font-size: 31px;
+            }
+
+            .project-layout {
+                padding: 28px 24px 32px;
+                gap: 35px;
+            }
+
+            .project-section {
+                margin-bottom: 37px;
+            }
+
+            .project-section > h2 {
+                font-size: 22px;
+            }
+
+            .project-sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .publication-group summary {
+                grid-template-columns: minmax(0, 1fr) auto;
+            }
+
+            .publication-count {
+                display: none;
+            }
+
+            .gallery-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 24px;
+            }
+
+            .gallery-prev {
+                left: 7px;
+            }
+
+            .gallery-next {
+                right: 7px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .site-footer {
+                padding: 24px 20px 16px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-small span,
+            .footer-small a {
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-page {
+                margin: 0 11px;
+            }
+
+            .project-heading {
+                padding: 25px 19px 23px;
+            }
+
+            .project-heading h1 {
+                font-size: 27px;
+            }
+
+            .project-layout {
+                padding: 25px 18px 28px;
+            }
+
+            .publication-group summary {
+                padding: 14px 15px;
+            }
+
+            .publication-list {
+                padding-right: 16px;
+                padding-left: 41px;
+            }
+
+            .project-gallery {
+                padding: 11px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .gallery-track,
+            .publication-group summary > i,
+            .back-to-research i {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button
+            class="menu-toggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="main-navigation"
+        >
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            <span>Menu</span>
+        </button>
+
+        <nav id="main-navigation" aria-label="Main navigation">
+            <a href="index.html">About</a>
+            <a href="Research.html" aria-current="page">Research</a>
+            <a href="Members.html">Members</a>
+            <a href="Publications.html">Publications</a>
+            <a href="Teaching.html">Teaching</a>
+            <a href="index.html?scroll=news">News</a>
+            <a href="Join.html">Join us</a>
+        </nav>
+    </header>
+
+    <main class="project-page">
+        <article class="project-detail">
+            <div class="project-heading">
+                <h1>Networked Control Systems</h1>
+            </div>
+
+            <div class="project-layout">
+                <div class="project-content">
+                    <section class="project-section">
+                        <h2>Introduction</h2>
+
+                        <p>
+                            Networked control systems integrate sensors,
+                            controllers, actuators, computing devices, and
+                            physical processes through communication
+                            networks. They provide an important technological
+                            foundation for autonomous systems, smart
+                            manufacturing, connected vehicles, robotic
+                            networks, and cyber-physical infrastructure.
+                        </p>
+
+                        <p>
+                            Communication networks improve system flexibility
+                            and enable distributed operation, but they also
+                            introduce practical challenges such as
+                            communication delays, packet loss, bandwidth
+                            limitations, asynchronous information exchange,
+                            quantization, and cyber-security risks. These
+                            factors can significantly affect system
+                            stability, safety, and control performance.
+                        </p>
+
+                        <p>
+                            This project investigates theoretical,
+                            computational, and experimental methods for
+                            analyzing and controlling networked systems under
+                            realistic communication and operational
+                            constraints. The research combines control
+                            theory, optimization, graph theory, machine
+                            learning, numerical simulation, and experimental
+                            validation.
+                        </p>
+                    </section>
+
+                    <section class="project-section">
+                        <h2>Related Technologies</h2>
+
+                        <ul class="technology-list">
+                            <li>Networked Control</li>
+                            <li>Distributed Control</li>
+                            <li>Graph Theory</li>
+                            <li>Event-Triggered Control</li>
+                            <li>Time-Delay Systems</li>
+                            <li>State Estimation</li>
+                            <li>Cyber-Physical Systems</li>
+                            <li>Resilient Control</li>
+                            <li>Machine Learning</li>
+                            <li>Convex Optimization</li>
+                            <li>MATLAB</li>
+                            <li>Python</li>
+                            <li>ROS</li>
+                        </ul>
+                    </section>
+
+                    <section class="project-section" id="project-publications">
+                        <h2>Publications</h2>
+
+                        <details class="publication-group">
+                            <summary>
+                                <span class="publication-group-title">
+                                    Journal Articles
+                                </span>
+
+                                <span class="publication-count">
+                                    2 publications
+                                </span>
+
+                                <i
+                                    class="fa-solid fa-chevron-down"
+                                    aria-hidden="true"
+                                ></i>
+                            </summary>
+
+                            <ol class="publication-list">
+                                <li class="publication-item">
+                                    <h3>Title of Journal Article One</h3>
+
+                                    <p class="publication-authors">
+                                        Author One, Author Two, Jason Liu
+                                    </p>
+
+                                    <p class="publication-source">
+                                        <cite>Journal Name</cite>,
+                                        vol. XX, no. X, pp. XXX–XXX, 2026.
+                                    </p>
+
+                                    <div class="publication-links">
+                                        <a
+                                            href="#"
+                                            aria-label="Open DOI for journal article one"
+                                        >
+                                            <i
+                                                class="fa-solid fa-link"
+                                                aria-hidden="true"
+                                            ></i>
+                                            DOI
+                                        </a>
+
+                                        <a
+                                            href="#"
+                                            aria-label="Download journal article one"
+                                        >
+                                            <i
+                                                class="fa-solid fa-file-pdf"
+                                                aria-hidden="true"
+                                            ></i>
+                                            PDF
+                                        </a>
+
+                                        <a
+                                            href="#"
+                                            aria-label="View source code for journal article one"
+                                        >
+                                            <i
+                                                class="fa-brands fa-github"
+                                                aria-hidden="true"
+                                            ></i>
+                                            Code
+                                        </a>
+                                    </div>
+                                </li>
+
+                                <li class="publication-item">
+                                    <h3>Title of Journal Article Two</h3>
+
+                                    <p class="publication-authors">
+                                        Author One, Jason Liu, Author Three
+                                    </p>
+
+                                    <p class="publication-source">
+                                        <cite>Journal Name</cite>,
+                                        vol. XX, no. X, pp. XXX–XXX, 2025.
+                                    </p>
+
+                                    <div class="publication-links">
+                                        <a
+                                            href="#"
+                                            aria-label="Open DOI for journal article two"
+                                        >
+                                            <i
+                                                class="fa-solid fa-link"
+                                                aria-hidden="true"
+                                            ></i>
+                                            DOI
+                                        </a>
+
+                                        <a
+                                            href="#"
+                                            aria-label="Download journal article two"
+                                        >
+                                            <i
+                                                class="fa-solid fa-file-pdf"
+                                                aria-hidden="true"
+                                            ></i>
+                                            PDF
+                                        </a>
+                                    </div>
+                                </li>
+                            </ol>
+                        </details>
+
+                        <details class="publication-group">
+                            <summary>
+                                <span class="publication-group-title">
+                                    Conference Papers
+                                </span>
+
+                                <span class="publication-count">
+                                    1 publication
+                                </span>
+
+                                <i
+                                    class="fa-solid fa-chevron-down"
+                                    aria-hidden="true"
+                                ></i>
+                            </summary>
+
+                            <ol class="publication-list">
+                                <li class="publication-item">
+                                    <h3>Title of Conference Paper One</h3>
+
+                                    <p class="publication-authors">
+                                        Author One, Author Two, Jason Liu
+                                    </p>
+
+                                    <p class="publication-source">
+                                        In:
+                                        <cite>Conference Name</cite>,
+                                        City, Country, 2025, pp. XXX–XXX.
+                                    </p>
+
+                                    <div class="publication-links">
+                                        <a
+                                            href="#"
+                                            aria-label="Open DOI for conference paper one"
+                                        >
+                                            <i
+                                                class="fa-solid fa-link"
+                                                aria-hidden="true"
+                                            ></i>
+                                            DOI
+                                        </a>
+
+                                        <a
+                                            href="#"
+                                            aria-label="Download conference paper one"
+                                        >
+                                            <i
+                                                class="fa-solid fa-file-pdf"
+                                                aria-hidden="true"
+                                            ></i>
+                                            PDF
+                                        </a>
+                                    </div>
+                                </li>
+                            </ol>
+                        </details>
+                    </section>
+                </div>
+
+                <aside
+                    class="project-sidebar"
+                    aria-label="Project information"
+                >
+                    <section class="sidebar-card">
+                        <h2>Project Information</h2>
+
+                        <dl class="project-information">
+                            <div>
+                                <dt>Project Period</dt>
+                                <dd>2024–Present</dd>
+                            </div>
+
+                            <div>
+                                <dt>Lead Researchers</dt>
+                                <dd>Prof. Jason Liu</dd>
+                            </div>
+
+                            <div>
+                                <dt>Collaborators</dt>
+                                <dd>Collaborator Name / Research Group</dd>
+                            </div>
+
+                            <div>
+                                <dt>Institution</dt>
+                                <dd>University of Macau</dd>
+                            </div>
+                        </dl>
+                    </section>
+
+                    <section class="sidebar-card">
+                        <h2>Project Gallery</h2>
+
+                        <div class="project-gallery">
+                            <div
+                                class="media-gallery"
+                                tabindex="0"
+                                aria-label="Project image gallery"
+                            >
+                                <div class="gallery-viewport">
+                                    <div class="gallery-track">
+                                        <img
+                                            src="images/projects/networked_control_01.jpg"
+                                            alt="Networked control system experimental platform"
+                                            loading="lazy"
+                                        >
+
+                                        <img
+                                            src="images/projects/networked_control_02.jpg"
+                                            alt="Networked control system simulation"
+                                            loading="lazy"
+                                        >
+
+                                        <img
+                                            src="images/projects/networked_control_03.jpg"
+                                            alt="Multi-robot network experiment"
+                                            loading="lazy"
+                                        >
+                                    </div>
+                                </div>
+
+                                <button
+                                    class="gallery-btn gallery-prev"
+                                    type="button"
+                                    aria-label="Previous image"
+                                >
+                                    ‹
+                                </button>
+
+                                <button
+                                    class="gallery-btn gallery-next"
+                                    type="button"
+                                    aria-label="Next image"
+                                >
+                                    ›
+                                </button>
+                            </div>
+
+                            <div
+                                class="media-gallery"
+                                tabindex="0"
+                                aria-label="Project video gallery"
+                            >
+                                <div class="gallery-viewport">
+                                    <div class="gallery-track">
+                                        <div class="gallery-slide">
+                                            <video
+                                                controls
+                                                preload="metadata"
+                                                playsinline
+                                            >
+                                                <source
+                                                    src="videos/projects/networked_control_01.mp4"
+                                                    type="video/mp4"
+                                                >
+                                                Your browser does not support the video element.
+                                            </video>
+                                        </div>
+
+                                        <div class="gallery-slide">
+                                            <video
+                                                controls
+                                                preload="metadata"
+                                                playsinline
+                                            >
+                                                <source
+                                                    src="videos/projects/networked_control_02.mp4"
+                                                    type="video/mp4"
+                                                >
+                                                Your browser does not support the video element.
+                                            </video>
+                                        </div>
+
+                                        <div class="gallery-slide">
+                                            <video
+                                                controls
+                                                preload="metadata"
+                                                playsinline
+                                            >
+                                                <source
+                                                    src="videos/projects/networked_control_03.mp4"
+                                                    type="video/mp4"
+                                                >
+                                                Your browser does not support the video element.
+                                            </video>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button
+                                    class="gallery-btn gallery-prev"
+                                    type="button"
+                                    aria-label="Previous video"
+                                >
+                                    ‹
+                                </button>
+
+                                <button
+                                    class="gallery-btn gallery-next"
+                                    type="button"
+                                    aria-label="Next video"
+                                >
+                                    ›
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </article>
+
+        <a class="back-to-research" href="Research.html">
+            <i
+                class="fa-solid fa-arrow-left"
+                aria-hidden="true"
+            ></i>
+            Back to Research
+        </a>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-box footer-address">
+                    <i
+                        class="fa-solid fa-location-dot"
+                        aria-hidden="true"
+                    ></i>
+
+                    <div>
+                        <strong>Lab</strong>
+
+                        <p>
+                            Intelligent Unmanned Systems Laboratory<br>
+                            Room E11-1047, Faculty of Science and Technology<br>
+                            University of Macau, Avenida da Universidade,
+                            Taipa, Macau, China
+                        </p>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-address">
+                    <i
+                        class="fa-solid fa-building"
+                        aria-hidden="true"
+                    ></i>
+
+                    <div>
+                        <strong>Prof. Office</strong>
+
+                        <p>
+                            Prof. LIU<br>
+                            Room E11-4080, Faculty of Science and Technology<br>
+                            University of Macau, Avenida da Universidade,
+                            Taipa, Macau, China
+                        </p>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-small">
+                    <i
+                        class="fa-solid fa-phone"
+                        aria-hidden="true"
+                    ></i>
+
+                    <div>
+                        <strong>Tel</strong>
+                        <span>+853 8822 4238</span>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-small">
+                    <i
+                        class="fa-solid fa-fax"
+                        aria-hidden="true"
+                    ></i>
+
+                    <div>
+                        <strong>Fax</strong>
+                        <span>+853 8822 2426</span>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-small">
+                    <i
+                        class="fa-solid fa-envelope"
+                        aria-hidden="true"
+                    ></i>
+
+                    <div>
+                        <strong>Email</strong>
+
+                        <a href="mailto:jasonliu@um.edu.mo">
+                            jasonliu@um.edu.mo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-box footer-small footer-social">
+                    <i
+                        class="fa-solid fa-link"
+                        aria-hidden="true"
+                    ></i>
+
+                    <div>
+                        <strong>Follow Us</strong>
+
+                        <div class="social-links">
+                            <a
+                                href="https://www.youtube.com/@Jason-Liu-um"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="YouTube"
+                                title="YouTube"
+                            >
+                                <i
+                                    class="fa-brands fa-youtube"
+                                    aria-hidden="true"
+                                ></i>
+                            </a>
+
+                            <a
+                                href="https://space.bilibili.com/3546697722497300"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Bilibili"
+                                title="Bilibili"
+                            >
+                                <i class="fa-brands fa-bilibili" aria-hidden="true"></i>
+                            </a>
+
+                            <a
+                                href="images/wechat.jpg"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="WeChat"
+                                title="WeChat"
+                            >
+                                <i class="fa-brands fa-weixin" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                &copy; 2026 Intelligent Unmanned Systems Laboratory.
+                All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const mainNavigation = document.getElementById("main-navigation");
+
+        function closeMobileMenu() {
+            if (!menuToggle || !mainNavigation) {
+                return;
+            }
+
+            mainNavigation.classList.remove("is-open");
+            menuToggle.setAttribute("aria-expanded", "false");
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+
+            const icon = menuToggle.querySelector("i");
+
+            if (icon) {
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+            }
+        }
+
+        function openMobileMenu() {
+            if (!menuToggle || !mainNavigation) {
+                return;
+            }
+
+            mainNavigation.classList.add("is-open");
+            menuToggle.setAttribute("aria-expanded", "true");
+            menuToggle.setAttribute(
+                "aria-label",
+                "Close navigation menu"
+            );
+
+            const icon = menuToggle.querySelector("i");
+
+            if (icon) {
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
+            }
+        }
+
+        if (menuToggle && mainNavigation) {
+            menuToggle.addEventListener("click", () => {
+                const isOpen =
+                    menuToggle.getAttribute("aria-expanded") === "true";
+
+                if (isOpen) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
+            });
+
+            mainNavigation.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", closeMobileMenu);
+            });
+
+            document.addEventListener("click", event => {
+                if (!event.target.closest("header")) {
+                    closeMobileMenu();
+                }
+            });
+
+            document.addEventListener("keydown", event => {
+                if (
+                    event.key === "Escape" &&
+                    menuToggle.getAttribute("aria-expanded") === "true"
+                ) {
+                    closeMobileMenu();
+                    menuToggle.focus();
+                }
+            });
+
+            window.addEventListener("resize", () => {
+                if (window.innerWidth > 750) {
+                    closeMobileMenu();
+                }
+            });
+        }
+
+        document.querySelectorAll(".media-gallery").forEach(gallery => {
+            const track = gallery.querySelector(".gallery-track");
+            const previousButton = gallery.querySelector(".gallery-prev");
+            const nextButton = gallery.querySelector(".gallery-next");
+
+            if (!track || !previousButton || !nextButton) {
+                return;
+            }
+
+            const items = Array.from(track.children);
+
+            if (items.length === 0) {
+                return;
+            }
+
+            let currentIndex = 0;
+
+            function updateGallery() {
+                track.style.transform =
+                    `translateX(-${currentIndex * 100}%)`;
+
+                items.forEach((item, index) => {
+                    if (index !== currentIndex) {
+                        item.querySelectorAll("video").forEach(video => {
+                            video.pause();
+                        });
+                    }
+                });
+            }
+
+            function showPreviousItem() {
+                currentIndex =
+                    (currentIndex - 1 + items.length) %
+                    items.length;
+
+                updateGallery();
+            }
+
+            function showNextItem() {
+                currentIndex =
+                    (currentIndex + 1) %
+                    items.length;
+
+                updateGallery();
+            }
+
+            previousButton.addEventListener(
+                "click",
+                showPreviousItem
+            );
+
+            nextButton.addEventListener(
+                "click",
+                showNextItem
+            );
+
+            gallery.addEventListener("keydown", event => {
+                if (
+                    event.target.matches(
+                        "video, button, input, select, textarea"
+                    )
+                ) {
+                    return;
+                }
+
+                if (event.key === "ArrowLeft") {
+                    event.preventDefault();
+                    showPreviousItem();
+                }
+
+                if (event.key === "ArrowRight") {
+                    event.preventDefault();
+                    showNextItem();
+                }
+            });
+
+            updateGallery();
+        });
+    </script>
+</body>
+</html>
