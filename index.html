@@ -318,66 +318,6 @@
             line-height: 1.5;
         }
 
-        .country-stats {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            max-width: 1000px;
-            width: calc(100% - 40px);
-            margin: 40px auto;
-            padding: 20px 50px 25px;
-        }
-
-        .country-stats h2 {
-            color: #2c3e50;
-            margin-top: 0;
-            margin-bottom: 12px;
-            font-size: 28px;
-            text-align: left;
-        }
-
-        .country-stats-total {
-            margin: 0 0 16px;
-            color: #555;
-            font-size: 18px;
-            text-align: left;
-        }
-
-        .country-stats-message {
-            margin: 10px 0 0;
-            color: #7f8c8d;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        .country-stats-map {
-            position: relative;
-            width: 100%;
-            height: clamp(340px, 52vw, 560px);
-            overflow: hidden;
-            background: #ffffff;
-            border-radius: 10px;
-        }
-
-        .country-stats-map svg {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        .country-map-country {
-            stroke: #ffffff;
-            stroke-width: 0.45px;
-            vector-effect: non-scaling-stroke;
-            cursor: pointer;
-        }
-
-        .country-map-country:hover {
-            stroke: #ffd446;
-            stroke-width: 1.5px;
-        }
-
         .site-footer {
             background-color: #002c55;
             color: #ffffff;
@@ -841,27 +781,6 @@
                 border-color: #002c55;
             }
 
-            .country-stats {
-                width: calc(100% - 24px);
-                margin: 20px auto;
-                padding: 20px 16px 24px;
-                border-radius: 10px;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            }
-
-            .country-stats h2 {
-                margin-bottom: 12px;
-                font-size: 24px;
-            }
-
-            .country-stats-total {
-                font-size: 16px;
-            }
-
-            .country-stats-map {
-                height: 300px;
-            }
-
         }
 
         @media (max-width: 600px) {
@@ -879,15 +798,6 @@
             }
         }
     </style>
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?2330c4990c8360c91145820f85284ec7";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
 </head>
 <body>
 
@@ -967,24 +877,6 @@
         </button>
     </div>
 
-    <section class="country-stats" id="country-stats">
-        <h2>Web Visit</h2>
-
-        <p class="country-stats-total" id="country-stats-total">
-            Loading statistics...
-        </p>
-
-        <div
-            class="country-stats-map"
-            id="country-stats-map"
-            aria-label="World map showing visitor statistics"
-        ></div>
-
-        <p class="country-stats-message" id="country-stats-message">
-            Loading map...
-        </p>
-    </section>
-
     <footer class="site-footer">
         <div class="footer-content">
 
@@ -1004,7 +896,7 @@
                 <div class="footer-box footer-address">
                     <i class="fa-solid fa-building"></i>
                     <div>
-                        <strong>Prof. Office</strong>
+                        <strong>Office</strong>
                         <p>
                             Prof. LIU<br>
                             Room E11-4080, Faculty of Science and Technology<br>
@@ -1450,259 +1342,6 @@
         } else {
             console.error('OpenCC-JS 加载失败');
         }
-    </script>
-
-    <script src="resource/d3.min.js"></script>
-
-    <script>
-        (() => {
-            const STATS_WORKER =
-                'https://country-counter.jasonliu-umac.workers.dev';
-
-            const totalElement =
-                document.getElementById('country-stats-total');
-
-            const mapElement =
-                document.getElementById('country-stats-map');
-
-            const messageElement =
-                document.getElementById('country-stats-message');
-
-            async function recordVisit() {
-                if (sessionStorage.getItem('country_visit_sent')) {
-                    return;
-                }
-
-                const response = await fetch(
-                    `${STATS_WORKER}/track`,
-                    {
-                        method: 'POST',
-                        keepalive: true
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error(
-                        `Track request failed: HTTP ${response.status}`
-                    );
-                }
-
-                sessionStorage.setItem(
-                    'country_visit_sent',
-                    '1'
-                );
-            }
-
-            async function loadStatistics() {
-                const response = await fetch(
-                    `${STATS_WORKER}/stats`,
-                    {
-                        method: 'GET',
-                        cache: 'no-store'
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error(
-                        `Stats request failed: HTTP ${response.status}`
-                    );
-                }
-
-                const data = await response.json();
-                const countries = data.countries || [];
-
-                const mapValues = {};
-                let totalVisits = 0;
-
-                for (const item of countries) {
-                    const code = String(
-                        item.country_code || 'XX'
-                    ).toUpperCase();
-
-                    const count = Number(
-                        item.visit_count || 0
-                    );
-
-                    mapValues[code] = count;
-                    totalVisits += count;
-                }
-
-                totalElement.textContent =
-                    `Total visits: ${totalVisits.toLocaleString()}`;
-
-                if (countries.length === 0) {
-                    messageElement.textContent =
-                        'No visitor statistics available yet.';
-                } else {
-                    messageElement.textContent =
-                        'Hover over a country to see its visit count.';
-                }
-
-                const geoResponse = await fetch(
-                    'resource/world-10m.json',
-                    {
-                        cache: 'force-cache'
-                    }
-                );
-
-                if (!geoResponse.ok) {
-                    throw new Error(
-                        `GeoJSON loading failed: HTTP ${geoResponse.status}`
-                    );
-                }
-
-                const worldData = await geoResponse.json();
-
-                if (
-                    !worldData ||
-                    worldData.type !== 'FeatureCollection' ||
-                    !Array.isArray(worldData.features)
-                ) {
-                    throw new Error('Invalid GeoJSON FeatureCollection');
-                }
-
-                function reverseGeometryRings(geometry) {
-                    if (!geometry) {
-                        return;
-                    }
-
-                    if (geometry.type === 'Polygon') {
-                        geometry.coordinates.forEach(ring => {
-                            ring.reverse();
-                        });
-                    }
-
-                    if (geometry.type === 'MultiPolygon') {
-                        geometry.coordinates.forEach(polygon => {
-                            polygon.forEach(ring => {
-                                ring.reverse();
-                            });
-                        });
-                    }
-                }
-
-                worldData.features.forEach(feature => {
-                    const geometryType = feature.geometry?.type;
-
-                    if (
-                        geometryType !== 'Polygon' &&
-                        geometryType !== 'MultiPolygon'
-                    ) {
-                        return;
-                    }
-
-                    if (d3.geoArea(feature) > 2 * Math.PI) {
-                        reverseGeometryRings(feature.geometry);
-                    }
-                });
-
-                const width = mapElement.clientWidth;
-                const height = mapElement.clientHeight;
-
-                const svg = d3.select(mapElement)
-                    .append('svg')
-                    .attr('viewBox', `0 0 ${width} ${height}`)
-                    .attr('preserveAspectRatio', 'xMidYMid meet');
-
-                const projection = d3.geoNaturalEarth1()
-                    .fitExtent(
-                        [[8, 8], [width - 8, height - 8]],
-                        worldData
-                    );
-
-                const path = d3.geoPath()
-                    .projection(projection);
-
-                const maxVisit = Math.max(
-                    1,
-                    ...Object.values(mapValues)
-                );
-
-                const color = d3.scaleSequential()
-                    .domain([0, maxVisit])
-                    .interpolator(
-                        d3.interpolateRgb('#dceaf3', '#002c55')
-                    );
-
-                function getCountryCode(feature) {
-                    const properties = feature.properties || {};
-
-                    return String(
-                        properties.ISO_A2_EH ||
-                        properties.ISO_A2 ||
-                        properties.iso_a2 ||
-                        ''
-                    ).toUpperCase();
-                }
-
-                function getCountryName(feature) {
-                    const properties = feature.properties || {};
-
-                    return (
-                        properties.NAME_EN ||
-                        properties.NAME ||
-                        properties.ADMIN ||
-                        properties.name ||
-                        'Unknown'
-                    );
-                }
-
-                const countriesLayer = svg
-                    .append('g')
-                    .attr('class', 'countries-layer');
-
-                countriesLayer
-                    .selectAll('path')
-                    .data(worldData.features)
-                    .join('path')
-                    .attr('class', 'country-map-country')
-                    .attr('d', path)
-                    .attr('fill', feature => {
-                        const code = getCountryCode(feature);
-                        const visits = mapValues[code] || 0;
-
-                        return visits > 0
-                            ? color(visits)
-                            : '#d9dee3';
-                    })
-                    .append('title')
-                    .text(feature => {
-                        const code = getCountryCode(feature);
-                        const name = getCountryName(feature);
-                        const visits = mapValues[code] || 0;
-
-                        return `${name}\nVisits: ${visits.toLocaleString()}`;
-                    });
-
-                messageElement.textContent =
-                    'Hover over a country to see its visit count.';
-            }
-
-            async function initializeStatistics() {
-                try {
-                    await recordVisit();
-                } catch (error) {
-                    console.warn('Visit tracking failed:', error);
-                }
-
-                try {
-                    await loadStatistics();
-                } catch (error) {
-                    console.error('Loading statistics failed:', error);
-
-                    messageElement.textContent =
-                        `Loading failed: ${error.name}: ${error.message}`;
-                }
-            }
-
-            if (
-                totalElement &&
-                mapElement &&
-                messageElement
-            ) {
-                initializeStatistics();
-            }
-        })();
     </script>
 </body>
 </html>
