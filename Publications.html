@@ -177,6 +177,27 @@
             text-align: right;
         }
 
+        .year-group.under-review-group .year-label {
+            position: absolute;
+            top: 0;
+            right: calc(100% + 55px);
+            width: 130px;
+            margin: 0;
+            color: #002c55;
+            font-size: 18px;
+            line-height: 1.4;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .year-group.under-review-group::before {
+            background: #002c55;
+        }
+
+        .year-group.under-review-group .publication {
+            border-top-color: #002c55;
+        }
+
         .publication-list {
             display: flex;
             flex-direction: column;
@@ -184,12 +205,8 @@
         }
 
         .publication {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 270px;
-            align-items: center;
-            gap: 30px;
+            display: block;
             width: 100%;
-            min-height: 200px;
             padding: 26px 28px;
             background: white;
             border: 1px solid #d9e0e5;
@@ -237,22 +254,6 @@
 
         .publication-links i {
             margin-right: 5px;
-        }
-
-        .publication-image {
-            width: 100%;
-            overflow: hidden;
-            aspect-ratio: 16 / 9;
-            background: white;
-            border: 1px solid #ccd5dc;
-        }
-
-        .publication-image img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            object-position: center;
         }
 
         .no-results {
@@ -354,7 +355,6 @@
             transition: color 0.2s ease;
         }
 
-        /* 在除最后一个图标外的每个图标右侧添加竖线 */
         .footer-small .social-links a:not(:last-child)::after {
             content: "";
             position: absolute;
@@ -391,8 +391,6 @@
 
         @media (max-width: 1000px) {
             .publication {
-                grid-template-columns: minmax(0, 1fr) 220px;
-                gap: 22px;
                 padding: 22px;
             }
 
@@ -564,19 +562,17 @@
                 text-align: left;
             }
 
+            .year-group.under-review-group .year-label {
+                position: static;
+                width: auto;
+                margin: 0 0 13px;
+                font-size: 18px;
+                text-align: left;
+                white-space: normal;
+            }
+
             .publication {
-                grid-template-columns: 1fr;
-                gap: 18px;
                 padding: 20px;
-            }
-
-            .publication-image {
-                grid-row: 1;
-                aspect-ratio: 16 / 9;
-            }
-
-            .publication-info {
-                grid-row: 2;
             }
 
             .publication-title {
@@ -729,6 +725,15 @@
                             >
                                 <i class="fa-brands fa-weixin" aria-hidden="true"></i>
                             </a>
+                            <a
+                                href="https://orcid.org/0000-0003-4100-9813"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="ORCID"
+                                title="ORCID"
+                            >
+                                <i class="fa-brands fa-orcid" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -743,59 +748,212 @@
     <script>
         const publications = [
             {
-                year: 2026,
-                title: '[Publication Title]',
-                authors: 'Jason Jinrong Liu, [Author Name], and [Author Name]',
-                venue: '[Journal or Conference Name], vol. [Volume], no. [Issue], pp. [Pages], 2026.',
-                image: 'images/UM.jpg',
-                doi: 'https://doi.org/10.xxxx/xxxxx',
-                pdf: 'papers/publication_01.pdf'
+                status: 'under-review',
+                title: 'Title of the submitted manuscript',
+                authors: 'Author One; Author Two; Jason J. R. Liu',
+                venue: 'Submitted to Journal Name',
+                doi: '',
+                pdf: ''
             },
             {
-                year: 2026,
-                title: '[Publication Title]',
-                authors: '[Author Name], Jason Jinrong Liu, and [Author Name]',
-                venue: '[Journal or Conference Name], 2026.',
-                image: 'images/UM_1.jpg',
+                status: 'under-review',
+                title: 'Title of another submitted manuscript',
+                authors: 'Author One; Jason J. R. Liu',
+                venue: 'Submitted to Journal or Conference Name',
                 doi: '',
                 pdf: ''
             },
             {
                 year: 2026,
-                title: '[Publication Title]',
-                authors: 'Mike, Jason Jinrong Liu, and [Author Name]',
-                venue: '[Journal or Conference Name], 2026.',
-                image: 'images/UM_1.jpg',
-                doi: '',
+                title: 'Adaptive fault-tolerant control of nonlinear systems: A self-regulating spatiotemporal performance approach',
+                authors: 'Zeqiang Li; Jason J. R. Liu; Yongduan Song',
+                venue: 'Automatica',
+                doi: 'https://doi.org/10.1016/J.AUTOMATICA.2025.112602',
                 pdf: ''
             },
             {
                 year: 2026,
-                title: 'Meta-GCBF: Meta-Learning Enhanced Graph Control Barrier Functions for Scalable and Safe Multi-UAV Control in Uncertain Wind Environments',
-                authors: '[Author Name], Jason Jinrong Liu, and [Author Name]',
-                venue: '[Journal or Conference Name], 2026.',
-                image: 'images/UM_1.jpg',
-                doi: '',
-                pdf: 'papers/publication_03.pdf'
+                title: 'Prescribed-Time Control of Nonlinear Systems With Unknown Coefficients: An Event-Triggered Approach',
+                authors: 'Zeqiang Li; Yujuan Wang; Jason J. R. Liu; Yongduan Song',
+                venue: 'IEEE Transactions on Systems, Man, and Cybernetics: Systems',
+                doi: 'https://doi.org/10.1109/TSMC.2026.3661541',
+                pdf: ''
+            },
+            {
+                year: 2026,
+                title: 'Resilient Control Under DoS Attacks of Hybrid Air-Sea Swarms With Cooperative-Competitive Interactions',
+                authors: 'Jiacheng Li; Jason J. R. Liu; Chenjun Liu; Simone Baldi; Dengxiu Yu',
+                venue: 'IEEE Transactions on Aerospace and Electronic Systems',
+                doi: 'https://doi.org/10.1109/TAES.2025.3643810',
+                pdf: ''
+            },
+            {
+                year: 2026,
+                title: 'Robust PI Control with Improved Performance for Nonlinear Systems under Saturated Actuation',
+                authors: 'Zeqiang Li; Jason J. R. Liu; George A. Rovithakis; Yongduan Song',
+                venue: 'IEEE Transactions on Automatic Control',
+                doi: 'https://doi.org/10.1109/TAC.2026.3702916',
+                pdf: ''
+            },
+            {
+                year: 2026,
+                title: 'Distributed Source Seeking With Global Field Exploration Using Adaptive Model Predictive Control',
+                authors: 'Xinzhou Gao; Zhan Shu; Jason J. R. Liu',
+                venue: 'IEEE Transactions on Automatic Control',
+                doi: 'https://doi.org/10.1109/TAC.2026.3666701',
+                pdf: ''
+            },
+            {
+                year: 2026,
+                title: 'Reputation-Driven Cooperative Control for Networked Systems with Input Saturation and Malicious Nodes',
+                authors: 'Jiacheng Li; Jason J. R. Liu; Hak-Keung Lam',
+                venue: '2026 European Control Conference (ECC)',
+                pdf: ''
+            },
+            {
+                year: 2026,
+                title: 'Chain-Reaction-Based Privacy-Preserving Distributed Kalman Filtering',
+                authors: 'Zhongyao Hu; Jason J. R. Liu; Zhan Shu',
+                venue: 'IEEE Transactions on Control of Network Systems',
+                doi: 'https://doi.org/10.1109/TCNS.2026.3667767',
+                pdf: ''
             },
             {
                 year: 2025,
-                title: 'Meta-GCBF: Meta-Learning Enhanced Graph Control Barrier Functions for Scalable and Safe Multi-UAV Control in Uncertain Wind Environments',
-                authors: 'Jason Jinrong Liu and [Author Name]',
-                venue: '[Journal or Conference Name], vol. [Volume], no. [Issue], pp. [Pages], 2025.',
-                image: 'images/UM_2.jpg',
-                doi: 'https://doi.org/10.xxxx/xxxxx',
-                pdf: 'papers/publication_03.pdf'
+                title: 'Adaptive Reinforcement Learning Tracking Control of Vehicle Based on Threshold Band Event-Triggered',
+                authors: 'Yan-Jun Liu; Xiaosheng Sun; Yi Liao; Shu Li; Lei Liu; Jason J. R. Liu',
+                venue: 'IEEE Transactions on Automation Science and Engineering',
+                doi: 'https://doi.org/10.1109/TASE.2025.3555765',
+                pdf: ''
+            },
+            {
+                year: 2025,
+                title: 'Disturbance-State-Based Event-Triggered Model Predictive Tracking Control for 4WIS-4WID Mobile Robot',
+                authors: 'Xiaosheng Sun; Yan-Jun Liu; Shu Li; Mou Chen; Lei Liu; Jason J. R. Liu',
+                venue: 'International Journal of Robust and Nonlinear Control',
+                doi: 'https://doi.org/10.1002/RNC.7967',
+                pdf: ''
+            },
+            {
+                year: 2025,
+                title: 'Event-Triggered Disturbance Rejection Control for Brain-Actuated Mobile Robot: An SSA-Optimized Sliding Mode Approach',
+                authors: 'Ziming Zhu; Jun Song; Shuping He; Jason J. R. Liu; Hak-Keung Lam',
+                venue: 'IEEE/ASME Transactions on Mechatronics',
+                doi: 'https://doi.org/10.1109/TMECH.2024.3402116',
+                pdf: ''
+            },
+            {
+                year: 2025,
+                title: 'Event-Triggered Fixed-Time Sliding Mode Control for Lip-Reading-Driven UAV: Disturbance Rejection Using Wind Field Optimization',
+                authors: 'Tian Lan; Jun Song; Zhiwei Hou; Kang Chen; Shuping He; Hai Wang; Jason J. R. Liu',
+                venue: 'IEEE Transactions on Automation Science and Engineering',
+                doi: 'https://doi.org/10.1109/TASE.2024.3496939',
+                pdf: ''
+            },
+            {
+                year: 2025,
+                title: 'Domain-Agnostic Neural Oil Painting via Normalization Affine Test-Time Adaptation',
+                authors: 'Qichao Dong; Lingyu Liu; Yaxiong Wang; Jason J.R. Liu; Zhedong Zheng',
+                venue: 'The 33rd ACM International Conference on Multimedia',
+                doi: 'https://doi.org/10.1145/3746027.3758165',
+                pdf: ''
+            },
+            {
+                year: 2025,
+                title: 'Distributed Reduced Order Observer for LTI Systems Under Impulsive Communication Disturbances',
+                authors: 'Yali Wu; Yaping Sun; Jason J. R. Liu; Viacheslav P. Shkodyrev; Housheng Su',
+                venue: 'Guidance, Navigation and Control',
+                doi: 'https://doi.org/10.1142/S2737480725500074',
+                pdf: ''
+            },
+            {
+                year: 2025,
+                title: 'Periodic event-triggered predictive formation control of networked mobile robots under unknown disturbances',
+                authors: 'Chengyu Zhu; Xiurui Lin; Dongdong Qin; Andong Liu; Wen-An Zhang; Jason J.R. Liu',
+                venue: 'Journal of the Franklin Institute',
+                doi: 'https://doi.org/10.1016/j.jfranklin.2025.107581',
+                pdf: ''
             },
             {
                 year: 2024,
-                title: '[Publication Title]',
-                authors: '[Author Name], [Author Name], and Jason Jinrong Liu',
-                venue: '[Journal or Conference Name], 2024.',
-                image: '',
-                doi: '',
+                title: 'Decentralized H₂ Control for Discrete-Time Networked Systems With Positivity Constraint',
+                authors: 'Jason J. R. Liu; Ka-Wai Kwok; James Lam',
+                venue: 'IEEE Transactions on Neural Networks and Learning Systems',
+                doi: 'https://doi.org/10.1109/TNNLS.2023.3248682',
                 pdf: ''
-            }
+            },
+            {
+                year: 2024,
+                title: 'Learning-based stabilization of Markov jump linear systems',
+                authors: 'Jason J. R. Liu; Masaki Ogura; Qiyu Li; James Lam',
+                venue: 'Neurocomputing',
+                doi: 'https://doi.org/10.1016/J.NEUCOM.2024.127618',
+                pdf: ''
+            },
+            {
+                year: 2024,
+                title: 'Necessary and Sufficient Conditions on Consensus of General Fractional-Order Multi-Agent Systems Over Directed Networks',
+                authors: 'Jason J. R. Liu; James Lam; Ka-Wai Kwok',
+                venue: 'IEEE Transactions on Network Science and Engineering',
+                doi: 'https://doi.org/10.1109/TNSE.2023.3301015',
+                pdf: ''
+            },
+            {
+                year: 2024,
+                title: 'Reachable Set-Based Consensus of Positive Multiagent Systems',
+                authors: 'Chenchen Fan; James Lam; Xiujuan Lu; Jason J. R. Liu; Xiaomei Wang; Ka-Wai Kwok',
+                venue: 'IEEE Transactions on Systems, Man, and Cybernetics: Systems',
+                doi: 'https://doi.org/10.1109/TSMC.2023.3342905',
+                pdf: ''
+            },
+            {
+                year: 2024,
+                title: 'Cooperative Control of Air-Ground Swarms Under DoS Attacks via Cloud-Fog Computing',
+                authors:'Jiacheng Li; Dengxiu Yu; Wenhui Ma; Jason J. R. Liu; Yan-Jun Liu',
+                venue: 'IEEE Transactions on Network Science and Engineering',
+                doi: 'https://doi.org/10.1109/TNSE.2024.3409900',
+                pdf: ''
+            },
+            {
+                year: 2022,
+                title: 'Positive Consensus of Directed Multiagent Systems',
+                authors: 'Jason J. R. Liu; Nachuan Yang; Ka-Wai Kwok; James Lam',
+                venue: 'IEEE Transactions on Automatic Control',
+                doi: 'https://doi.org/10.1109/TAC.2021.3108517',
+                pdf: ''
+            },
+            {
+                year: 2021,
+                title: 'Generalized Lead-Lag H<sub>∞</sub> Compensators for MIMO Linear Systems',
+                authors: 'Jason J. R. Liu; James Lam; Xiaochen Xie; Zhan Shu',
+                venue: 'IEEE Transactions on Systems, Man, and Cybernetics: Systems',
+                doi: 'https://doi.org/10.1109/TSMC.2019.2960583',
+                pdf: ''
+            },
+            {
+                year: 2020,
+                title: 'An Exact Characterization of the <i>L</i><sub>1</sub>/<i>L</i><sub>-</sub> Index of Positive Systems and Its Application to Fault Detection Filter Design',
+                authors: 'Jun Shen; Jason J. R. Liu; Yukang Cui',
+                venue: 'IEEE Transactions on Circuits and Systems II: Express Briefs',
+                doi: 'https://doi.org/10.1109/TCSII.2020.2978277',
+                pdf: ''
+            },
+            {
+                year: 2020,
+                title: 'Positivity-Preserving Consensus of Homogeneous Multiagent Systems',
+                authors: 'Jason J. R. Liu; James Lam; Zhan Shu',
+                venue: 'IEEE Transactions on Automatic Control',
+                doi: 'https://doi.org/10.1109/TAC.2019.2946205',
+                pdf: ''
+            },
+            {
+                year: 2020,
+                title: 'Sequential Markov Games With Ordered Agents: A Bellman-Like Approach',
+                authors: 'Nachuan Yang; Jason J. R. Liu',
+                venue: 'IEEE Control Systems Letters',
+                doi: 'https://doi.org/10.1109/LCSYS.2020.2995756',
+                pdf: ''
+            },
         ];
 
         const timeline = document.getElementById('publication-timeline');
@@ -808,79 +966,122 @@
             if (!list.length) {
                 timeline.innerHTML =
                     '<div class="no-results">No matching publications found.</div>';
-                searchResult.textContent = '0 publications found';
+
+                searchResult.textContent =
+                    '0 publications found';
+
                 return;
             }
 
             const groups = list.reduce((result, paper) => {
-                if (!result[paper.year]) result[paper.year] = [];
-                result[paper.year].push(paper);
+                const groupName =
+                    paper.status === 'under-review'
+                        ? 'Under review'
+                        : String(paper.year);
+
+                if (!result[groupName]) {
+                    result[groupName] = [];
+                }
+
+                result[groupName].push(paper);
+
                 return result;
             }, {});
 
-            timeline.innerHTML = Object.keys(groups)
-                .sort((a, b) => Number(b) - Number(a))
-                .map(year => `
-                    <section class="year-group">
-                        <h2 class="year-label">${year}</h2>
+            const groupNames = Object.keys(groups).sort(
+                (firstGroup, secondGroup) => {
+                    if (firstGroup === 'Under review') {
+                        return -1;
+                    }
 
-                        <div class="publication-list">
-                            ${groups[year].map(paper => `
-                                <article class="publication">
-                                    <div class="publication-info">
-                                        <h3 class="publication-title">
-                                            ${paper.title}
-                                        </h3>
+                    if (secondGroup === 'Under review') {
+                        return 1;
+                    }
 
-                                        <p class="publication-authors">
-                                            ${paper.authors}
-                                        </p>
+                    return (
+                        Number(secondGroup) -
+                        Number(firstGroup)
+                    );
+                }
+            );
 
-                                        <p class="publication-venue">
-                                            ${paper.venue}
-                                        </p>
+            timeline.innerHTML = groupNames
+                .map(groupName => {
+                    const isUnderReview =
+                        groupName === 'Under review';
 
-                                        ${paper.doi || paper.pdf ? `
-                                            <div class="publication-links">
-                                                ${paper.doi ? `
-                                                    <a
-                                                        href="${paper.doi}"
-                                                        target="_blank"
-                                                        rel="noopener"
-                                                    >
-                                                        <i class="fa-solid fa-link"></i>
-                                                        DOI
-                                                    </a>
-                                                ` : ''}
+                    return `
+                        <section
+                            class="year-group ${
+                                isUnderReview
+                                    ? 'under-review-group'
+                                    : ''
+                            }"
+                        >
+                            <h2 class="year-label">
+                                ${groupName}
+                            </h2>
 
-                                                ${paper.pdf ? `
-                                                    <a
-                                                        href="${paper.pdf}"
-                                                        target="_blank"
-                                                        rel="noopener"
-                                                    >
-                                                        <i class="fa-solid fa-file-pdf"></i>
-                                                        PDF
-                                                    </a>
-                                                ` : ''}
-                                            </div>
-                                        ` : ''}
-                                    </div>
+                            <div class="publication-list">
+                                ${groups[groupName].map(paper => `
+                                    <article class="publication">
+                                        <div class="publication-info">
+                                            <h3 class="publication-title">
+                                                ${paper.title}
+                                            </h3>
 
-                                    <div class="publication-image">
-                                        <img
-                                            src="${paper.image}"
-                                            alt="${paper.title}"
-                                        >
-                                    </div>
-                                </article>
-                            `).join('')}
-                        </div>
-                    </section>
-                `).join('');
+                                            <p class="publication-authors">
+                                                ${paper.authors}
+                                            </p>
+
+                                            <p class="publication-venue">
+                                                ${paper.venue}
+                                            </p>
+
+                                            ${paper.doi || paper.pdf ? `
+                                                <div class="publication-links">
+                                                    ${paper.doi ? `
+                                                        <a
+                                                            href="${paper.doi}"
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            <i
+                                                                class="fa-solid fa-link"
+                                                                aria-hidden="true"
+                                                            ></i>
+                                                            DOI
+                                                        </a>
+                                                    ` : ''}
+
+                                                    ${paper.pdf ? `
+                                                        <a
+                                                            href="${paper.pdf}"
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            <i
+                                                                class="fa-solid fa-file-pdf"
+                                                                aria-hidden="true"
+                                                            ></i>
+                                                            PDF
+                                                        </a>
+                                                    ` : ''}
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    </article>
+                                `).join('')}
+                            </div>
+                        </section>
+                    `;
+                })
+                .join('');
 
             searchResult.textContent =
-                `${list.length} publication${list.length === 1 ? '' : 's'} found`;
+                `${list.length} publication${
+                    list.length === 1 ? '' : 's'
+                } found`;
         }
 
         function searchPublications() {
