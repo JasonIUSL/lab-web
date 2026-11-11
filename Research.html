@@ -186,6 +186,76 @@
             line-height: 1.7;
         }
 
+        .awards-featured-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .award-card {
+            min-width: 0;
+            overflow: hidden;
+            background: white;
+            border: 1px solid #dce3e8;
+            border-radius: 9px;
+            box-shadow: 0 2px 7px rgba(0, 44, 85, 0.04);
+        }
+
+        .award-image {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+            background: #fff;
+            border-bottom: 1px solid #dce3e8;
+        }
+
+        .award-content {
+            padding: 20px 21px 23px;
+        }
+
+        .award-date {
+            display: block;
+            margin: 0 0 10px;
+            color: #667481;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .award-content h3,
+        .award-details h3 {
+            margin: 0 0 10px;
+            color: #002c55;
+            font-size: 18px;
+            line-height: 1.45;
+        }
+
+        .award-content p,
+        .award-details p {
+            margin: 0;
+            color: #596772;
+            font-size: 14px;
+            line-height: 1.7;
+            hyphens: none;
+        }
+
+        .awards-list {
+            margin-top: 26px;
+            border-top: 1px solid #cad4dc;
+        }
+
+        .award-list-item {
+            display: grid;
+            grid-template-columns: 110px minmax(0, 1fr);
+            gap: 22px;
+            padding: 24px 0;
+            border-bottom: 1px solid #dce3e8;
+        }
+
+        .award-list-item .award-date {
+            margin: 2px 0 0;
+        }
+
         .area-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -805,6 +875,20 @@
                 font-size: 25px;
             }
 
+            .awards-featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .award-list-item {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                padding: 22px 0;
+            }
+
+            .award-list-item .award-date {
+                margin: 0;
+            }
+
             .area-grid,
             .hardware-grid,
             .open-source-list {
@@ -986,6 +1070,54 @@
         >
             <div class="section-heading">
                 <h2 id="awards-heading">Awards</h2>
+            </div>
+
+            <div class="awards-featured-grid">
+                <article class="award-card" aria-labelledby="award-ieee-fellowship">
+                    <img
+                        class="award-image"
+                        src="images/JiachengLI_IEEE_fellowship.jpg"
+                        alt="IEEE Control Systems Society Graduate Collaboration Fellowship letter for Jiacheng LI"
+                        loading="lazy"
+                    >
+                    <div class="award-content">
+                        <time class="award-date" datetime="2026-10">Oct. 2026</time>
+                        <h3 id="award-ieee-fellowship">IEEE Control Systems Society Graduate Collaboration Fellowship</h3>
+                        <p>Jiacheng LI was awarded the 2026 IEEE Control Systems Society Graduate Collaboration Fellowship.</p>
+                    </div>
+                </article>
+
+                <article class="award-card" aria-labelledby="award-ifac-finalist">
+                    <img
+                        class="award-image"
+                        src="images/IFAC_2026_BUSAN.jpg"
+                        alt="IFAC 2026 Certificate of Distinction presented to Jiacheng LI"
+                        loading="lazy"
+                    >
+                    <div class="award-content">
+                        <time class="award-date" datetime="2026-08">Aug. 2026</time>
+                        <h3 id="award-ifac-finalist">Finalist for the Outstanding PhD Research Award</h3>
+                        <p>Jiacheng LI was selected as a finalist for the Outstanding PhD Research Award at the 23rd IFAC World Congress (IFAC 2026) in Busan, South Korea, where he presented in the PhD Forum and received a Certificate of Distinction.</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="awards-list">
+                <article class="award-list-item" aria-labelledby="award-guan-zhaozhi">
+                    <time class="award-date" datetime="2026-07">July 2026</time>
+                    <div class="award-details">
+                        <h3 id="award-guan-zhaozhi">Finalist for the Guan Zhaozhi Award</h3>
+                        <p>Wenjun LUO attended the 45th Chinese Control Conference in Changsha, China, where he presented the paper &quot;Learning Discrete-Time Control Barrier Functions via RRT-Guided Sampling and Graph Neural Network.&quot; The paper was selected as a finalist for the Guan Zhaozhi Award.</p>
+                    </div>
+                </article>
+
+                <article class="award-list-item" aria-labelledby="award-ascc-nominee">
+                    <time class="award-date" datetime="2026-06">June 2026</time>
+                    <div class="award-details">
+                        <h3 id="award-ascc-nominee">Best Student Paper Nominee</h3>
+                        <p>Jiacheng LI attended the 15th Asian Control Conference (ASCC) in Bali, Indonesia, where he presented the paper titled “An Improved APF Method for UAV Formation Control in Unforeseen Dynamic Obstacle Environments.” The paper was selected as a Best Student Paper nominee.</p>
+                    </div>
+                </article>
             </div>
         </section>
 
